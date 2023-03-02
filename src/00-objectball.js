@@ -116,10 +116,107 @@ function gameObject() {
         },
 }
 }
-console.log(gameObject());
+
+//console.log(gameObject());
+
 function homeTeamName() {
-    let object = gameObject();
-    return object["home"]["teamName"];
+  let object = gameObject();
+  return object["home"]["teamName"];
+}
+
+//console.log(homeTeamName());
+
+const players = {...gameObject().home.players, ...gameObject().away.players}
+const game = gameObject();
+const homePlayers = game.home.players;
+const homeTeam = game.home
+const awayTeam = game.away
+const teams = [homeTeam, awayTeam]
+
+function numPointsScored(name) {
+  return players[name].points
+}
+console.log(numPointsScored("Brendan Haywood"))
+
+function shoeSize(name) {
+  return players[name].shoe
+}
+console.log(shoeSize("Brendan Haywood"))
+
+function teamColors(team) {
+  if(team === homeTeam.teamName){
+    return homeTeam.colors
+  } else {
+    return awayTeam.colors
   }
-  
-  console.log(homeTeamName());
+}
+console.log(teamColors("Charlotte Hornets"))
+
+function teamNames(){
+  const team = [homeTeam.teamName, awayTeam.teamName]
+  return team  
+}
+console.log(teamNames())
+
+function playerStats(name) {
+  return players[name]
+}
+console.log(playerStats("Brendan Haywood"))
+
+function bigShoeRebounds() {
+  let biggestFeet = {shoe: 0}
+  for (const player in players){
+    if(players[player].shoe > biggestFeet.shoe){
+      biggestFeet.shoe = players[player].shoe
+      biggestFeet.playerName = player
+    }
+
+  }
+  console.log(biggestFeet.playerName)
+  return players[biggestFeet.playerName].rebounds
+}
+console.log(bigShoeRebounds())
+
+function mostPointsScored() {
+  let topPlayer = {points: 0}
+  for(const player in players) {
+    console.log(player)
+    console.log(topPlayer)
+    if(parseInt(players[player].points) > parseInt(topPlayer.points)){
+      topPlayer.points = players[player].points
+      topPlayer.playerName = player
+    }
+  }
+  console.log(topPlayer)
+  return topPlayer.playerName
+}
+console.log(mostPointsScored())
+
+function winningTeam(){
+  let teamPoints = {totalPoints: 0}
+  for(const team of teams){
+    let points = 0
+    console.log(team)
+    for(const player in team.players){
+      console.log(player)
+      points += parseInt(team.players[player].points)
+    }if(points > teamPoints.totalPoints){
+      teamPoints.totalPoints = points
+      teamPoints.teamName = team.teamName
+    }
+  }
+  return teamPoints.teamName
+}
+console.log(winningTeam())
+
+function playerWithLongestName() {
+  let longestPlayer = {nameLength: 0}
+  for(const player in players){
+    if(player.length > longestPlayer.nameLength){
+      longestPlayer.nameLength = player.length
+      longestPlayer.name = player
+    }
+   }
+   return longestPlayer.name
+}
+console.log(playerWithLongestName())
